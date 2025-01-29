@@ -1,0 +1,97 @@
+#include <iostream>
+using namespace std;
+
+// Định nghĩa cấu trúc của một nút trong danh sách liên kết
+struct Node {
+    int data;
+    Node* next;
+};
+
+// Định nghĩa cấu trúc của queue
+struct Queue {
+    Node* front;
+    Node* rear;
+};
+
+// Hàm khởi tạo
+void initialize(Queue& queue) {
+    queue.front = nullptr;
+    queue.rear = nullptr;
+}
+
+// Hàm kiểm tra queue rỗng
+bool isEmpty(Queue& queue) {
+    return queue.front == nullptr;
+}
+
+// Hàm thêm phần tử vào queue
+void enqueue(Queue& queue, int value) {
+    Node* newNode = new Node();
+    newNode->data = value;
+    newNode->next = nullptr;
+    if (isEmpty(queue)) {
+        queue.front = newNode;
+        queue.rear = newNode;
+    } else {
+        queue.rear->next = newNode;
+        queue.rear = newNode;
+    }
+}
+
+// Hàm lấy phần tử ra khỏi queue
+int dequeue(Queue& queue) {
+    if (isEmpty(queue)) {
+        cout << "Queue is empty!" << endl;
+        return -1;
+    } else {
+        Node* temp = queue.front;
+        int dequeuedValue = queue.front->data;
+        queue.front = queue.front->next;
+        if (queue.front == nullptr) {
+            queue.rear = nullptr;
+        }
+        delete temp;
+        return dequeuedValue;
+    }
+}
+
+// Hàm xem phần tử ở đầu queue
+int peek(Queue& queue) {
+    if (isEmpty(queue)) {
+        cout << "Queue is empty!" << endl;
+        return -1;
+    } else {
+        return queue.front->data;
+    }
+}
+
+// Hàm in các phần tử trong queue
+void print(Queue& queue) {
+    Node* current = queue.front;
+    while (current != nullptr) {
+        cout << current->data << " ";
+        current = current->next;
+    }
+    cout << endl;
+}
+
+int main() {
+    Queue queue;
+    initialize(queue);
+
+    enqueue(queue, 10);
+    enqueue(queue, 20);
+    enqueue(queue, 30);
+
+    cout << "Front element is: " << peek(queue) << endl;
+
+    cout << "Elements in queue: ";
+    print(queue);
+
+    cout << "Elements dequeued from queue: ";
+    cout << dequeue(queue) << " ";
+    cout << dequeue(queue) << " ";
+    cout << dequeue(queue) << endl;
+
+    return 0;
+}

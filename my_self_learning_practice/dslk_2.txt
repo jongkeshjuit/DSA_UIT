@@ -1,0 +1,207 @@
+// Hom nay minh se on tap link list: thao tac add, delete, print
+#include<iostream>
+using namespace std;
+
+struct NODE
+{
+    int data;
+    NODE* pNext;
+};
+struct LIST 
+{
+    NODE* pHead;
+    NODE* pTail;
+};
+void emptyList(LIST& L)
+{
+    L.pHead = L.pTail = NULL;
+}
+// tao node 
+NODE* createnode(int x)
+{
+    NODE* p = new NODE;
+    p->data = x;
+    p->pNext = NULL;
+    return p;
+}
+// addhead
+void addhead(LIST& L, int x)
+{
+    NODE* p = createnode(x);
+    if(L.pHead == NULL)
+    {
+        L.pHead = L.pTail = p;
+        return;
+    }
+    p->pNext = L.pHead;
+    L.pHead = p;
+}
+// addtail
+void addtail(LIST& L, int x)
+{
+    NODE* p = createnode(x);
+    if(L.pHead == NULL)
+    {
+        L.pHead = L.pTail = p;
+        return;
+    }
+    L.pTail->pNext = p;
+    L.pTail = p;
+}
+// addpos
+void addpos(LIST& L, int x, int pos)
+{
+    if(L.pHead == NULL)
+    {
+        addhead(L, x);
+        return;
+    }
+    NODE* p = createnode(x);
+    NODE* current = L.pHead;
+    int i = 0;
+    while(current != NULL && i < pos -1)
+    {
+        current = current->pNext;
+        i++;
+    }
+    if(current == NULL)
+    {
+         addtail(L, x);
+         return;
+    }
+    p->pNext = current->pNext;
+    current->pNext = p;
+    
+}
+// deletehead
+void deletehead(LIST& L)
+{
+    if(L.pHead == NULL) return;
+    NODE* temp = L.pHead;
+    L.pHead = L.pHead->pNext;
+    if(L.pHead == NULL)
+        emptyList(L);
+    delete temp;
+}
+//deletetail
+void deletetail(LIST& L)
+{
+    // 0 phan tu
+    if(L.pHead == NULL) return;
+    // 1 phan tu 
+    if(L.pHead == L.pTail)
+    {
+        emptyList(L);
+        return;
+    }
+    // hon 1 phan tu
+    NODE* current = L.pHead;
+    while(current->pNext != L.pTail)
+    {
+        current = current->pNext;
+    }
+    delete L.pTail;
+    L.pTail = current;
+    L.pTail->pNext = NULL;
+}
+// deletepos
+void deletepos(LIST& L, int pos)
+{
+    if(pos <= 0)
+    {
+        deletehead(L);
+        return;
+    }
+    NODE* current = L.pHead;
+    int i = 0;
+    while(current != NULL && i < pos -1)
+    {
+        current = current->pNext;
+        i++;
+    }
+    if(current == NULL || current->pNext == NULL) return;
+    NODE* temp = current->pNext;
+    current->pNext = temp->pNext;
+    if(temp == L.pTail)
+        L.pTail = current;
+    delete temp;
+}
+// search
+int search(LIST& L, int x)
+{
+    int i = 0;
+    NODE* current = L.pHead;
+    while(current != NULL)
+    {
+        if(current->data == x)
+            return i;
+        current = current->pNext;
+        i++;
+    }
+    return -1;
+}
+// reverse
+void reverse(LIST& L)
+{
+    NODE* truoc = NULL;
+    NODE* nay = L.pHead;
+    NODE* ke = NULL;
+    // key nayke truoc nay ke 
+    while(nay != NULL)
+    {
+        ke = nay->pNext;
+        nay->pNext = truoc;
+        truoc = nay;
+        nay = ke;
+    }
+    L.pHead = truoc;
+}
+// print
+void Print(LIST L)
+{
+    NODE* p = L.pHead;
+    if(p == NULL)
+    {
+        cout << "Empty List.";
+        return;
+    }
+    while(p != NULL)
+    {
+        cout << p->data << " ";
+        p = p->pNext;
+    }
+}
+int main()
+{
+    LIST L;
+    emptyList(L);
+    addhead(L, 1);
+    addhead(L, 2);
+    addhead(L, 3);
+    Print(L);
+    cout << endl;
+    addtail(L, 4);
+    addtail(L, 5);
+    addtail(L, 6);
+    Print(L);
+    cout << endl;
+    addpos(L, 8, 2);
+    Print(L);
+    cout << endl;
+    deletehead(L);
+    Print(L);
+    cout << endl;
+    deletetail(L);
+    Print(L);
+    cout << endl;
+    deletepos(L, 2);
+    Print(L);
+    cout << endl;
+    int find = search(L, 8);
+    if(!find) cout <<"Not found";
+    else 
+        cout <<" Vi tri: " << find << endl;
+    reverse(L);
+    Print(L);
+    return 1;
+}

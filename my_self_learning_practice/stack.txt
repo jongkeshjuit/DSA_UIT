@@ -1,0 +1,71 @@
+#include <iostream>
+using namespace std;
+
+struct NODE
+{
+  int data;
+  NODE* pNext;
+};
+struct Stack 
+{
+    NODE* top;
+};
+void push(Stack& s, int x)
+{
+    NODE* p = new NODE;
+    p->data = x;
+    p->pNext = s.top;
+    s.top = p;
+}
+void init(Stack& s)
+{
+    s.top = NULL;
+}
+bool checkempty(Stack s)
+{
+    return (s.top == NULL);
+}
+void Print(Stack s)
+{
+    NODE* current = s.top;
+    while(current != NULL)
+    {
+        cout << current->data << " ";
+        current = current->pNext;
+    }
+}
+int pop(Stack& s)
+{
+    if(checkempty(s))
+        return -1;
+    NODE* temp = s.top;
+    int pop = temp->data;
+    s.top = s.top->pNext;
+    delete temp;
+    return pop;
+}
+int top(Stack s)
+{
+    if(checkempty(s))
+        return -1;
+    return (s.top->data);
+}
+int main()
+{
+    Stack s;
+    init(s);
+    cout << "Kiem tra stack null: " << checkempty(s);
+    cout << endl;
+    cout << "stack: ";
+    push(s, 1);
+    push(s, 2);
+    Print(s);
+    cout << endl;
+    cout << "stack: ";
+    pop(s);
+    Print(s);
+    cout << endl;
+    cout << "top : ";
+    cout << top(s);
+    return 1;
+}

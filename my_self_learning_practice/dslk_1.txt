@@ -1,0 +1,168 @@
+#include<iostream>
+using namespace std;
+
+struct NODE
+{
+  int data;
+  NODE* pNext;
+};
+struct LIST 
+{
+    NODE* pHead;
+    NODE* pTail;
+};
+void emptylist(LIST& L)
+{
+    L.pHead = L.pTail = NULL;
+}
+NODE* createnode(int x)
+{
+    NODE* p = new NODE;
+    p->data = x;
+    p->pNext = NULL;
+    return p;
+}
+// addhead 
+void addhead(LIST& L, int x)
+{
+    NODE* p = createnode(x);
+    if(L.pHead == NULL)
+        L.pHead = L.pTail = p;
+    else
+    {
+        p->pNext = L.pHead;
+        L.pHead = p;
+    }
+}
+
+// addtail
+void addtail(LIST& L, int x)
+{
+    NODE* p = createnode(x);
+    if(L.pHead == NULL)
+        L.pHead = L.pTail = p;
+    else
+    {
+        L.pTail->pNext = p;
+        L.pTail = p;
+    }
+}
+// addpos
+void addpos(LIST& L, int x, int pos)
+{
+    if(pos <= 0)
+    {
+        addhead(L, x);
+        return;
+    }
+    NODE* p = createnode(x);
+    NODE* current = L.pHead;
+    int i = 0;
+    while(current != NULL && i < pos - 1)
+    {
+        current = current->pNext;
+        i++;
+    }
+    if(current == NULL)
+        addtail(L, x);
+    else
+    {
+        p->pNext = current->pNext;
+        current->pNext = p;
+    }
+}
+// deletehead
+void deletehead(LIST& L)
+{
+    if(L.pHead == NULL) return;
+    NODE* temp = L.pHead;
+    L.pHead = L.pHead->pNext;
+    delete temp;
+}
+// deletetail
+void deletetail(LIST& L)
+{
+    //0 phan tu
+    if(L.pHead == NULL) return;
+    //1 phan tu 
+    if(L.pHead == L.pTail)
+    {
+        delete L.pHead ;
+         L.pHead = L.pTail = NULL;
+    }
+    // nhieu hon 1 
+    else
+    {
+        NODE* current = L.pHead;
+        while(current->pNext != L.pTail)
+            current = current->pNext;
+        delete L.pTail;
+        L.pTail = current;
+        L.pTail->pNext = NULL;
+    }
+}
+// deletepos
+void deletepos(LIST& L, int pos)
+{
+    if(pos <= 0)
+    {
+        deletehead(L);
+        return;
+    }
+    NODE* current = L.pHead;
+    int i =0;
+    while(current != NULL && i < pos - 1)
+    {
+        current = current->pNext;
+        i++;
+    }
+    if(current == NULL || current->pNext == NULL)
+        return;
+    // vi tri xoa
+    NODE* temp = current->pNext;
+    current->pNext = temp->pNext;
+    // cuoi
+    if(temp == L.pTail)
+        L.pTail = current;
+    delete temp;
+}
+void Print(LIST L)
+{
+    NODE* p = L.pHead;
+    if(p == NULL)
+    {
+        cout <<"Empty LIST.";
+        return;
+    }
+    while(p != NULL)
+    {
+        cout << p->data << " ";
+        p = p->pNext;
+    }
+}
+int main()
+{
+    LIST L;
+    emptylist(L);
+    addhead(L, 1);
+    addhead(L, 2);
+    addhead(L, 3);
+    Print(L);
+    cout << endl;
+    addtail(L, 4);
+    addtail(L, 5);
+    addtail(L, 6);
+    Print(L);
+    cout << endl;
+    addpos(L, 8, 2);
+    Print(L);
+    cout << endl;
+    deletehead(L);
+    Print(L);
+    cout << endl;
+    deletetail(L);
+    Print(L);
+    cout << endl;
+    deletepos(L, 2);
+    Print(L);
+}

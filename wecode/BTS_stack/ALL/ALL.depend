@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1732506902 source:d:\workspace\uit\cau truc du lieu va giai thuat\wecode\bts_stack\all\main.cpp
+	<iostream>
+	<string>
+	<locale>
+	<codecvt>
+	<io.h>
+	<fcntl.h>
+

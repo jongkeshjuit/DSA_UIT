@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1735576228 source:d:\workspace\uit\cau truc du lieu va giai thuat\wecode\1\8.pointer_struct_sinhvien-struct ngaythang_nhapxuatds_sapxeptheomasv\main.cpp
+	<iomanip>
+	<iostream>
+	<stdio.h>
+	<limits>
+	<string>
+	<string.h>
+

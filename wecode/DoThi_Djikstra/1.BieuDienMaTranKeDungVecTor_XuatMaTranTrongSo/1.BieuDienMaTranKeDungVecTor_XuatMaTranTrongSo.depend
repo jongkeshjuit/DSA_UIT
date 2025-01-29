@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1734364620 source:d:\workspace\uit\cau truc du lieu va giai thuat\wecode\dothi_djikstra\1.bieudienmatrankedungvector_xuatmatrantrongso\main.cpp
+	<iostream>
+	<vector>
+	<map>
+	<string>
+

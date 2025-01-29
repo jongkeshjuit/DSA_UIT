@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1734364796 source:d:\workspace\uit\cau truc du lieu va giai thuat\wecode\dothi_djikstra\3.problem963_dothitrongso_dinhcoback_map\main.cpp
+	<iostream>
+	<vector>
+	<map>
+	<string>
+
